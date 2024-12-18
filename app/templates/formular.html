@@ -1,0 +1,14 @@
+{% from "macros/fields.html" import render_input_field, render_password_field, render_checkbox_field, render_submit %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+  <h3>Log in</h3>
+  <form method="POST" id='login-form'>
+    {{ form.hidden_tag() }}
+    {{ render_input_field(form.name) }}
+    {{ render_input_field(form.surename) }}
+    {{ render_submit() }}
+  </form>
+  <br>
+{% endblock %}
