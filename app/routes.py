@@ -14,7 +14,7 @@ from .views import (
     account_management_views,
     static_views,
 )
-from .models import User,Uzivatele,PocetDeti
+from .models import User,Uzivatele,Vek
 
 bp = Blueprint('routes', __name__)
 
@@ -25,23 +25,23 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField,DateFi
 from wtforms.validators import DataRequired, Email, EqualTo, Length,InputRequired, ValidationError
 import re
 
-class PocetDetiForm(FlaskForm):
+class VekForm(FlaskForm):
     def validate_name(form, field):
         if not re.match("^[A-Za-z]*$", field.data):
             raise ValidationError("Name must contain only letters without special characters")
 
-    def validate_pocet_deti(form, field):
+    def validate_vek(form, field):
         if not field.data.isdigit() or int(field.data) < 0:
             raise ValidationError("Pocet deti must be a positive integer")
 
     name = StringField('Name', validators=[InputRequired(message="You can't leave this empty"), validate_name])
-    pocet_deti = StringField('Pocet Deti', validators=[InputRequired(message="You can't leave this empty"), validate_pocet_deti])
+    pocet_deti = StringField('vek', validators=[InputRequired(message="You can't leave this empty"), validate_pocet_deti])
 
 
 @bp.route("/smazat/<int:id>", methods=["POST"])
 def smazat(id):
     # Vyhledání záznamu podle ID
-    zaznam = db.query(PocetDeti).get(id)
+    zaznam = db.query(Vek).get(id)
     if zaznam:
         db.delete(zaznam)
         db.commit()
@@ -49,15 +49,15 @@ def smazat(id):
 
 
 
-@bp.route("/pocet_deti", methods=["GET", "POST"])
-def pocet_deti():
-    form=PocetDetiForm()
+@bp.route("/vek", methods=["GET", "POST"])
+def vek():
+    form=VekForm()
     if form.validate_on_submit():
-        new_entry = PocetDeti(jmeno=form.name.data, pocet_deti=int(form.pocet_deti.data))
+        new_entry = Vek(jmeno=form.name.data, vek=int(form.vek.data))
         db.add(new_entry)
         db.commit()
         return redirect(url_for("routes.vypis"))  # Přesměrování na /vypis
-    return render_template("pocet_deti.html",form=form)
+    return render_template("vek.html",form=form)
 
 class FormFormular(FlaskForm):
     def validate_characters(form, field):
@@ -71,7 +71,7 @@ class FormFormular(FlaskForm):
 @bp.route("/vypis", methods=["GET"])
 def vypis():
     # Načtení všech záznamů z databáze
-    zaznamy = db.query(PocetDeti).all()
+    zaznamy = db.query(Vek).all()
     return render_template("vypis.html", zaznamy=zaznamy)
 
 

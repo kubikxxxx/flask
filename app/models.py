@@ -71,9 +71,9 @@ class Uzivatele(Base):
     surename = Column(String(50), nullable=False)
     created_at = Column(DateTime, nullable=False, server_default=func.now())
 
-class PocetDeti(Base):
-    __tablename__ = "pocet_deti"
+class Vek(Base):
+    __tablename__ = "vek"
     id = Column(Integer, primary_key=True)
     jmeno = Column(String(50), nullable=False)
-    pocet_deti = Column(Integer, nullable=False)
+    vek = Column(Integer, nullable=False)
     time = Column(DateTime(timezone=True), nullable=False, server_default=func.now())

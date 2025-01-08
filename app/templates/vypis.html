@@ -14,7 +14,7 @@
         {% for zaznam in zaznamy %}
         <tr>
             <td>{{ zaznam.jmeno }}</td>
-            <td>{{ zaznam.pocet_deti }}</td>
+            <td>{{ zaznam.vek }}</td>
             <td>
                 <form action="{{ url_for('routes.smazat', id=zaznam.id) }}" method="POST">
                     <button type="submit">Smazat</button>
@@ -23,6 +23,6 @@
         </tr>
         {% endfor %}
     </table>
-    <a href="/pocet_deti">Zpět na formulář</a>
+    <a href="/vek">Zpět na formulář</a>
 </body>
 </html>
