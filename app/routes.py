@@ -35,7 +35,7 @@ class VekForm(FlaskForm):
             raise ValidationError("Pocet deti must be a positive integer")
 
     name = StringField('Name', validators=[InputRequired(message="You can't leave this empty"), validate_name])
-    pocet_deti = StringField('vek', validators=[InputRequired(message="You can't leave this empty"), validate_pocet_deti])
+    vek = StringField('vek', validators=[InputRequired(message="You can't leave this empty"), validate_vek])
 
 
 @bp.route("/smazat/<int:id>", methods=["POST"])
